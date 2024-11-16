@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 app.use(cors({ origin: "*" }));
 
-app.get("/create-user", async (req, res) => {
+app.post("/create-user", async (req, res) => {
   const { fullname, email, password } = req.body;
   if (!fullname || !email || !password) {
     return res
@@ -31,6 +31,20 @@ app.get("/create-user", async (req, res) => {
     password: hashedpassword,
   });
   await user.save();
+
+  const accesstoken = jwt.sign(
+    { userId: user_id },
+    process.env.ACCESS_TOKEN_SECRET,
+    {
+      expiresIn: "72h",
+    }
+  );
+  return res.status(201).json({
+    error: false,
+    user: { fullname: user.fullname, email: user.email },
+    accesstoken,
+    message: "Registration successfull",
+  });
 });
 app.listen(8000);
 module.exports = app;
