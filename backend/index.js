@@ -4,9 +4,15 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const config = "./config.json";
 const mongoose = require("mongoose");
-const user = require("./models/user.model");
+const User = require("./models/user.model");
 
-// mongoose.connect(config.connectionString);
+mongoose
+  .connect(config.connectionString, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("Error connecting to MongoDB:", err));
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: "*" }));
@@ -18,7 +24,7 @@ app.post("/create-user", async (req, res) => {
       .status(400)
       .json({ error: true, message: "All feilds are required" });
   }
-  const isUser = await user.findOne({ email });
+  let isUser = await User.findOne({ email });
   if (isUser) {
     return res
       .status(400)
