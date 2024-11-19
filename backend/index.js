@@ -1,3 +1,4 @@
+require("dotenv").config();
 const bcrypt = require("bcrypt");
 const express = require("express");
 const cors = require("cors");
@@ -6,20 +7,25 @@ const config = "./config.json";
 const mongoose = require("mongoose");
 const User = require("./models/user.model");
 
-mongoose
-  .connect(config.connectionString, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+mongoose.connect(
+  "mongodb+srv://karthikbhatt22:6OS1cdtPKWZM1vPx@travelstory.rbinw.mongodb.net/?retryWrites=true&w=majority&appName=travelstory",
+  { useNewUrlParser: true }
+);
+mongoose.connection
+  .once("open", function () {
+    console.log("Conection has been made!");
   })
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("Error connecting to MongoDB:", err));
+  .on("error", function (error) {
+    console.log("Error is: ", error);
+  });
+
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: "*" }));
 
 app.post("/create-user", async (req, res) => {
-  const { fullname, email, password } = req.body;
-  if (!fullname || !email || !password) {
+  const { fullName, email, password } = req.body;
+  if (!fullName || !email || !password) {
     return res
       .status(400)
       .json({ error: true, message: "All feilds are required" });
@@ -32,7 +38,7 @@ app.post("/create-user", async (req, res) => {
   }
   const hashedpassword = await bcrypt.hash(password, 10);
   const user = new User({
-    fullname,
+    fullName,
     email,
     password: hashedpassword,
   });
