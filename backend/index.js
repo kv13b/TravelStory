@@ -7,6 +7,8 @@ const config = "./config.json";
 const mongoose = require("mongoose");
 const User = require("./models/user.model");
 
+const { authToken } = require("./utilities");
+
 mongoose.connect(
   "mongodb+srv://karthikbhatt22:6OS1cdtPKWZM1vPx@travelstory.rbinw.mongodb.net/?retryWrites=true&w=majority&appName=travelstory",
   { useNewUrlParser: true }
@@ -86,6 +88,20 @@ app.post("/login", async (req, res) => {
     user: { fullName: user.fullName, email: user.email },
     accesstoken,
     message: "Login successfull",
+  });
+});
+
+//get user
+app.get("/get-user", authToken, async (req, res) => {
+  const { userId } = req.user;
+  const isUser = await User.findOne({ _id: userId });
+
+  if (!isUser) {
+    return res.sendStatus(401);
+  }
+  return res.json({
+    user: isUser,
+    message: "",
   });
 });
 app.listen(8000);
