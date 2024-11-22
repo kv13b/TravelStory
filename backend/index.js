@@ -93,16 +93,25 @@ app.post("/login", async (req, res) => {
 
 //get user
 app.get("/get-user", authToken, async (req, res) => {
-  const { userId } = req.user;
-  const isUser = await User.findOne({ _id: userId });
+  try {
+    const { userId } = req.user; // Extract userId from the verified token
+    const isUser = await User.findOne({ _id: userId });
 
-  if (!isUser) {
-    return res.sendStatus(401);
+    if (!isUser) {
+      console.error("User not found with ID:", userId);
+      return res.sendStatus(404); // Not Found
+    }
+
+    return res.json({
+      user: isUser,
+      message: "User retrieved successfully.",
+    });
+  } catch (error) {
+    console.error("Error fetching user:", error.message);
+    return res.sendStatus(500); // Internal Server Error
   }
-  return res.json({
-    user: isUser,
-    message: "",
-  });
 });
+//add travel-story
+app.get("/get-user", authToken, async (req, res) => {});
 app.listen(8000);
 module.exports = app;
