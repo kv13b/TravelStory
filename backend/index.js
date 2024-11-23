@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const config = "./config.json";
 const mongoose = require("mongoose");
 const User = require("./models/user.model");
+const travelstory = require("./models/travelstory.model");
 
 const { authToken } = require("./utilities");
 
@@ -112,6 +113,33 @@ app.get("/get-user", authToken, async (req, res) => {
   }
 });
 //add travel-story
-app.get("/get-user", authToken, async (req, res) => {});
+app.post("/add-travel-story", authToken, async (req, res) => {
+  const { title, story, visitedLocation, imageUrl, visitedDate } = req.body;
+  const { userId } = req.user;
+
+  if (!title || !story || !visitedLocation || !imageUrl || !visitedDate) {
+    return res
+      .status(400)
+      .json({ error: true, message: "All fields are required" });
+  }
+
+  //convert the visistedDate from millisecend to date object
+  const parseVisistedDate = new Date(parseInt(visitedDate));
+
+  try {
+    const travelstory = new travelstory({
+      title,
+      story,
+      visitedLocation,
+      userId,
+      imageUrl,
+      visitedDate: parseVisistedDate,
+    });
+    await travelstory.save();
+    res.status(201).json({ story: travelstory, message: "added successfully" });
+  } catch (error) {
+    res.status(400).json({ error: true, message: error.message });
+  }
+});
 app.listen(8000);
 module.exports = app;
