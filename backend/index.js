@@ -127,7 +127,7 @@ app.post("/add-travel-story", authToken, async (req, res) => {
   const parseVisistedDate = new Date(parseInt(visitedDate));
 
   try {
-    const travelstory = new travelstory({
+    const Travelstory = new travelstory({
       title,
       story,
       visitedLocation,
@@ -135,11 +135,21 @@ app.post("/add-travel-story", authToken, async (req, res) => {
       imageUrl,
       visitedDate: parseVisistedDate,
     });
-    await travelstory.save();
-    res.status(201).json({ story: travelstory, message: "added successfully" });
+    await Travelstory.save();
+    res.status(201).json({ story: Travelstory, message: "added successfully" });
   } catch (error) {
     res.status(400).json({ error: true, message: error.message });
   }
+});
+//get all travel stories
+app.get("/get-travel-story", authToken, async (req, res) => {
+  const { userId } = req.user;
+  try {
+    const travstory = await travelstory
+      .find({ userId: userId })
+      .sort({ isFavourite: -1 });
+    res.status(200).json({ stories: travstory });
+  } catch (error) {}
 });
 app.listen(8000);
 module.exports = app;
