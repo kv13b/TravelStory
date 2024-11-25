@@ -7,7 +7,9 @@ const config = "./config.json";
 const mongoose = require("mongoose");
 const User = require("./models/user.model");
 const travelstory = require("./models/travelstory.model");
-
+const upload = require("./multer");
+const fs = require("fs");
+const path = require("path");
 const { authToken } = require("./utilities");
 
 mongoose.connect(
@@ -149,7 +151,12 @@ app.get("/get-travel-story", authToken, async (req, res) => {
       .find({ userId: userId })
       .sort({ isFavourite: -1 });
     res.status(200).json({ stories: travstory });
-  } catch (error) {}
+  } catch (error) {
+    res.status(400).json({ error: true, message: error.message });
+  }
 });
+
+//route to the image upload
+app.post("/image-upload", upload.single("image"), async (req, res) => {});
 app.listen(8000);
 module.exports = app;
