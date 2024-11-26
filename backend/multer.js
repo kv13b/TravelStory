@@ -1,5 +1,6 @@
 const express = require("express");
 const multer = require("multer");
+const path = require("path");
 
 //storage
 const storage = multer.diskStorage({
@@ -22,6 +23,6 @@ const filefilter = (req, file, cb) => {
 };
 
 //Initialize multer instance
-const upload = multer({ storage, fileFilter });
+const upload = multer({ storage, filefilter });
 
 module.exports = upload;

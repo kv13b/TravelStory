@@ -157,6 +157,22 @@ app.get("/get-travel-story", authToken, async (req, res) => {
 });
 
 //route to the image upload
-app.post("/image-upload", upload.single("image"), async (req, res) => {});
+app.post("/image-upload", upload.single("image"), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res
+        .status(400)
+        .json({ error: true, message: "No images uploaded" });
+    }
+    const imageurl = `http://localhost:8000/uploads/${req.file.filename}`;
+
+    res.status(201).json({ imageurl });
+  } catch (error) {
+    res.status(500).json({ error: true, message: error.message });
+  }
+});
+//serve static files from uploads dir
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/assets", express.static(path.join(__dirname, "assets")));
 app.listen(8000);
 module.exports = app;
