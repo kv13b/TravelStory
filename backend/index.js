@@ -11,6 +11,7 @@ const upload = require("./multer");
 const fs = require("fs");
 const path = require("path");
 const { authToken } = require("./utilities");
+const { error } = require("console");
 
 mongoose.connect(
   "mongodb+srv://karthikbhatt22:6OS1cdtPKWZM1vPx@travelstory.rbinw.mongodb.net/?retryWrites=true&w=majority&appName=travelstory",
@@ -155,7 +156,9 @@ app.get("/get-travel-story", authToken, async (req, res) => {
     res.status(400).json({ error: true, message: error.message });
   }
 });
-
+//serve static files from uploads dir
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/assets", express.static(path.join(__dirname, "assets")));
 //route to the image upload
 app.post("/image-upload", upload.single("image"), async (req, res) => {
   try {
@@ -171,8 +174,35 @@ app.post("/image-upload", upload.single("image"), async (req, res) => {
     res.status(500).json({ error: true, message: error.message });
   }
 });
-//serve static files from uploads dir
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-app.use("/assets", express.static(path.join(__dirname, "assets")));
+
+//delete the image from uploads
+app.delete("/delete-image", async (req, res) => {
+  const { imageUrl } = req.query;
+  try {
+    if (!imageUrl) {
+      res.status(400).json({
+        error: true,
+        message: "imageUrl parameter is required",
+      });
+    }
+    const filename = path.basename(imageUrl);
+    const filepath = path.join(__dirname, "uploads", filename);
+
+    if (fs.existsSync(filepath)) {
+      fs.unlinkSync(filepath);
+      res.status(200).json({
+        message: "image deleted successfully",
+      });
+    } else {
+      res.status(200).json({ message: "image not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: true, message: error.message });
+  }
+});
+
+//edit travel story
+app.post("/edit-story/:id", authToken, async (req, res) => {});
+
 app.listen(8000);
 module.exports = app;
