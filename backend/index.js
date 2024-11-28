@@ -202,7 +202,59 @@ app.delete("/delete-image", async (req, res) => {
 });
 
 //edit travel story
-app.post("/edit-story/:id", authToken, async (req, res) => {});
+app.post("/edit-story/:id", authToken, async (req, res) => {
+  const { id } = req.params;
+  const { title, story, visitedLocation, imageUrl, visitedDate } = req.body;
+  const { userId } = req.user;
+
+  if (!title || !story || !visitedLocation || !imageUrl || !visitedDate) {
+    return res
+      .status(400)
+      .json({ error: true, message: "All fields are required" });
+  }
+
+  //convert the visistedDate from millisecend to date object
+  const parseVisistedDate = new Date(parseInt(visitedDate));
+
+  try {
+    const Travelstory = await travelstory.findOne({ _id: id, userId: userId });
+    if (!Travelstory) {
+      return res
+        .status(404)
+        .json({ error: true, message: "Travel story not found" });
+    }
+
+    const placeholderUrl = `http://localhost:8000/assets/placeholder.png`;
+
+    Travelstory.title = title;
+    Travelstory.imageUrl = imageUrl || placeholderUrl;
+    Travelstory.visitedLocation = visitedLocation;
+    Travelstory.story = story;
+    Travelstory.visitedDate = parseVisistedDate;
+
+    await Travelstory.save();
+    res
+      .status(200)
+      .json({ story: Travelstory, message: "Updated successfully" });
+  } catch (error) {
+    res.status(500).json({ error: true, message: error.message });
+  }
+});
+
+//delete the travel story
+app.delete("/delete-story/:id", authToken, async (req, res) => {
+  const { id } = req.params;
+  const { userId } = req.user;
+
+  try {
+    const Travelstory = await travelstory.findOne({ _id: id, userId: userId });
+    if (!Travelstory) {
+      return res
+        .status(404)
+        .json({ error: true, message: "Travel story not found" });
+    }
+  } catch (error) {}
+});
 
 app.listen(8000);
 module.exports = app;
