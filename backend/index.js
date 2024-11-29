@@ -202,7 +202,7 @@ app.delete("/delete-image", async (req, res) => {
 });
 
 //edit travel story
-app.post("/edit-story/:id", authToken, async (req, res) => {
+app.put("/edit-story/:id", authToken, async (req, res) => {
   const { id } = req.params;
   const { title, story, visitedLocation, imageUrl, visitedDate } = req.body;
   const { userId } = req.user;
@@ -253,7 +253,41 @@ app.delete("/delete-story/:id", authToken, async (req, res) => {
         .status(404)
         .json({ error: true, message: "Travel story not found" });
     }
-  } catch (error) {}
+    await Travelstory.deleteOne({ _id: id, userId: userId });
+
+    //extract the filename of the image from the path and define it
+    const filename = path.basename(Travelstory.imageUrl);
+    const filepath = path.join(__dirname, "uploads", filename);
+    fs.unlink(filepath, (err) => {
+      if (err) {
+        console.log("Failed to delete the image");
+      }
+    });
+    res.status(200).json({ message: "image deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: true, message: error.message });
+  }
+});
+
+//edit the isFav
+app.put("/edit-isfav/:id", authToken, async (req, res) => {
+  const { id } = req.params;
+  const { isFavourite } = req.body;
+  const { userId } = req.user;
+  try {
+    const Travelstory = await travelstory.findOne({ _id: id, userId: userId });
+
+    if (!Travelstory) {
+      return res
+        .status(404)
+        .json({ error: true, message: "Travel story not found" });
+    }
+    Travelstory.isFavourite = isFavourite;
+    await Travelstory.save();
+    res.status(200).json({ story: Travelstory, message: "updated " });
+  } catch (error) {
+    res.status(500).json({ error: true, message: error.message });
+  }
 });
 
 app.listen(8000);
