@@ -290,5 +290,14 @@ app.put("/edit-isfav/:id", authToken, async (req, res) => {
   }
 });
 
+// search travel stories
+app.get("/search", authToken, async (req, res) => {
+  const { query } = req.query;
+  const { userId } = req.user;
+
+  if (!query) {
+    return res.status(404).json({ error: true, message: "query is required" });
+  }
+});
 app.listen(8000);
 module.exports = app;
