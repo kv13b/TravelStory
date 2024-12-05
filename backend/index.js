@@ -298,6 +298,21 @@ app.get("/search", authToken, async (req, res) => {
   if (!query) {
     return res.status(404).json({ error: true, message: "query is required" });
   }
+  try {
+    const searchResults = await travelstory
+      .find({
+        userId: userId, //$or: Allows matching any one of the specified conditions.
+        $or: [
+          { title: { $regex: query, $options: "i" } }, //$regex: Used for pattern matching in MongoDB queries.
+          { story: { $regex: query, $options: "i" } }, //case insensitive
+          { visistedLocation: { $regex: query, $options: "i" } },
+        ],
+      })
+      .sort({ isFavourite: -1 });
+    res.status(200).json({ stories: searchResults });
+  } catch (error) {
+    res.status(500).json({ error: true, message: error.message });
+  }
 });
 app.listen(8000);
 module.exports = app;
