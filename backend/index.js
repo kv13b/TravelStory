@@ -314,5 +314,27 @@ app.get("/search", authToken, async (req, res) => {
     res.status(500).json({ error: true, message: error.message });
   }
 });
+//filter travel stories by date range
+app.get("/travel-stroies/filter", authToken, async (req, res) => {
+  const { startDate, endDate } = req.query;
+  const { userId } = req.user;
+  //convert date from millisec to date obj
+  const start = new Date(parseInt(startDate));
+  const end = new Date(parseInt(endDate));
+  console.log(end);
+  const filterUser = await travelstory
+    .find({
+      userId: userId,
+      visitedDate: { $gte: start, $lte: end },
+    })
+    .sort({ isFavourite: -1 });
+
+  res.status(200).json({ stories: filterUser });
+  try {
+  } catch (error) {
+    res.status(500).json({ error: true, message: error.message });
+  }
+});
+
 app.listen(8000);
 module.exports = app;
