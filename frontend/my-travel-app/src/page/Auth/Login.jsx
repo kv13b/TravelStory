@@ -1,6 +1,27 @@
+import { useState } from "react";
 import PasswordFeild from "../../component/input/PasswordFeild";
+import { useNavigate } from "react-router-dom";
+import { validateEmail } from "../../pages/Helper";
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setpassword] = useState("");
+  const [error, seterror] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault(); // Prevent the default form submission
+
+    if (!validateEmail(email)) {
+      seterror("Please enter a valid email address");
+      return;
+    }
+    if (!password) {
+      seterror("Please enter the password");
+      return;
+    }
+  };
   return (
     <div className="h-screen bg-cyan-50 overflow-hidden relative">
       <div className="login-ui-box right-10 -top-40" />
@@ -18,10 +39,24 @@ function Login() {
         </div>
 
         <div className="w-2/4 h-[75vh] bg-white rounded-r-lg relative p-16 shadow-lg shadow-cyan-200">
-          <form onSubmit={() => {}}>
+          <form onSubmit={handleLogin}>
             <h4 className="text-2xl font-semibold nb-7">Login</h4>
-            <input type="text " placeholder="Email" className="input-box" />
-            <PasswordFeild />
+            <input
+              type="text "
+              placeholder="Email"
+              className="input-box"
+              value={email}
+              onChange={(target) => {
+                setEmail(target.value);
+              }}
+            />
+            <PasswordFeild
+              value={password}
+              onChange={(target) => {
+                setpassword(target.value);
+              }}
+            />
+            {error && <p className="text-red-500 text-xs pb-1">{error}</p>}
             <button type="submit" className="btn-primary">
               LOGIN
             </button>
@@ -30,7 +65,7 @@ function Login() {
             <button
               type="submit"
               className="btn-primary btn-light"
-              onClick={() => Navigate("/signup")}
+              onClick={() => navigate("/signup")}
             >
               CREATE ACCOUNT
             </button>
