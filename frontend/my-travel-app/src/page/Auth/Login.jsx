@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PasswordFeild from "../../component/input/PasswordFeild";
 import { useNavigate } from "react-router-dom";
-import { validateEmail } from "../../pages/Helper";
+import { validateEmail } from "../../utils/Helper";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -21,6 +21,9 @@ function Login() {
       seterror("Please enter the password");
       return;
     }
+
+    seterror("");
+    //Login api call
   };
   return (
     <div className="h-screen bg-cyan-50 overflow-hidden relative">
@@ -46,13 +49,13 @@ function Login() {
               placeholder="Email"
               className="input-box"
               value={email}
-              onChange={(target) => {
+              onChange={({ target }) => {
                 setEmail(target.value);
               }}
             />
             <PasswordFeild
               value={password}
-              onChange={(target) => {
+              onChange={({ target }) => {
                 setpassword(target.value);
               }}
             />
