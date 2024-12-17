@@ -2,6 +2,7 @@ import { useState } from "react";
 import PasswordFeild from "../../component/input/PasswordFeild";
 import { useNavigate } from "react-router-dom";
 import { validateEmail } from "../../utils/Helper";
+import axiosinstance from "../../utils/axiosinstance";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -24,6 +25,26 @@ function Login() {
 
     seterror("");
     //Login api call
+    try {
+      const response = await axiosinstance.post("/login", {
+        email: email,
+        password: password,
+      });
+      if (response.data && response.data.accesstoken) {
+        localStorage.setItem("token", response.data.accesstoken);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        seterror(error.response.data.message);
+      } else {
+        seterror("unexpected error occured");
+      }
+    }
   };
   return (
     <div className="h-screen bg-cyan-50 overflow-hidden relative">
