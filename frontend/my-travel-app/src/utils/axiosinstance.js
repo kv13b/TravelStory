@@ -8,7 +8,7 @@ const axiosinstance = axios.create({
     "Content-Type": "application/json",
   },
 });
-
+console.log(`${BASE_URL}/login`);
 axiosinstance.interceptors.request.use(
   (config) => {
     const accesstoken = localStorage.getItem("token");
