@@ -37,12 +37,14 @@ app.post("/create-user", async (req, res) => {
       .status(400)
       .json({ error: true, message: "All feilds are required" });
   }
+
   let isUser = await User.findOne({ email });
   if (isUser) {
     return res
       .status(400)
       .json({ error: true, message: "User already exists" });
   }
+  console.log("Checking for user with email:", email, "Found:", isUser);
   const hashedpassword = await bcrypt.hash(password, 10);
   const user = new User({
     fullName,
