@@ -1,4 +1,4 @@
-import LOGO from "../../assets/logo.jpg";
+import LOGO from "../../assets/logo.png";
 import ProfileInfo from "./cards/ProfileInfo";
 
 const Navbar = ({ userInfo }) => {
