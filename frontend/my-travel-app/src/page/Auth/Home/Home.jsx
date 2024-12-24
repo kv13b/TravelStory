@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../../../component/input/Navbar";
 import { useEffect, useState } from "react";
 import axiosinstance from "../../../utils/axiosinstance";
+import TravelstoryCard from "../../../component/input/cards/TravelstoryCard";
+import { data } from "autoprefixer";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -32,6 +34,8 @@ const Home = () => {
       console.log("an unexpected error occured" + error);
     }
   };
+  //handle edit
+  const handleEdit = (data) => {};
 
   useEffect(() => {
     getAllTravelStories();
@@ -41,9 +45,30 @@ const Home = () => {
   return (
     <>
       <Navbar userInfo={userInfo} />
+
       <div className="cotainer mx-auto py-10">
         <div className="flex gap-7">
           <div className="flex-1">
+            {allstories.length > 0 ? (
+              <div className="grid grid-cols-2 gap-4">
+                {allstories.map((item) => {
+                  return (
+                    <TravelstoryCard
+                      key={item._id}
+                      imageUrl={item.imageUrl}
+                      title={item.title}
+                      story={item.story}
+                      date={item.visitedDate}
+                      visitedLocation={item.visitedLocation}
+                      isFavorite={item.isFavorite}
+                      onEdit={() => handleEdit()}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              <>Empty card here</>
+            )}
             <div className="w-[320px]"></div>
           </div>
         </div>
