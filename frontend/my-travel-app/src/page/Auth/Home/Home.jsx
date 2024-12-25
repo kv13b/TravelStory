@@ -37,6 +37,10 @@ const Home = () => {
   //handle edit
   const handleEdit = (data) => {};
 
+  const handleViewStory = (data) => {};
+
+  const UpdateIsFav = async (storyData) => {};
+
   useEffect(() => {
     getAllTravelStories();
     getUserInfo();
@@ -61,7 +65,9 @@ const Home = () => {
                       date={item.visitedDate}
                       visitedLocation={item.visitedLocation}
                       isFavorite={item.isFavorite}
-                      onEdit={() => handleEdit()}
+                      onEdit={() => handleEdit(item)}
+                      onClick={() => handleViewStory(item)}
+                      onFavorite={() => UpdateIsFav(item)}
                     />
                   );
                 })}
