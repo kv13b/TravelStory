@@ -3,7 +3,6 @@ import Navbar from "../../../component/input/Navbar";
 import { useEffect, useState } from "react";
 import axiosinstance from "../../../utils/axiosinstance";
 import TravelstoryCard from "../../../component/input/cards/TravelstoryCard";
-import { data } from "autoprefixer";
 
 const Home = () => {
   const navigate = useNavigate();
