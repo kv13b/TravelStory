@@ -2,7 +2,7 @@ import { FaHeart } from "react-icons/fa6";
 import { GrMapLocation } from "react-icons/gr";
 
 const TravelstoryCard = ({
-  imgUrl,
+  imageUrl,
   title,
   date,
   story,
@@ -11,9 +11,9 @@ const TravelstoryCard = ({
   onFavClick,
 }) => {
   return (
-    <div>
+    <div className="border rounded-lg overflow-hidden bg-white hover:shadow-lg hover:shadow-slate-200 transition-all ease-in-out relative cursor-pointer">
       <img
-        src={imgUrl}
+        src={imageUrl}
         alt={title}
         className="w-full object-cover rounded-lg"
         onClick={onclick}
