@@ -4,6 +4,9 @@ function authToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
+  const decoded = jwt.decode(token);
+  console.log("Decoded Token:", decoded);
+
   if (!token) {
     console.error("No token found in the Authorization header.");
     return res.sendStatus(401); // Unauthorized
