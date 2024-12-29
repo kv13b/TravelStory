@@ -45,6 +45,7 @@ const Home = () => {
     getUserInfo();
     return () => {};
   }, []);
+  console.log(allstories);
   return (
     <>
       <Navbar userInfo={userInfo} />
@@ -61,7 +62,7 @@ const Home = () => {
                       imageUrl={item.imageUrl}
                       title={item.title}
                       story={item.story}
-                      date={item.visitedDate}
+                      date={item.createdOn}
                       visitedLocation={item.visitedLocation}
                       isFavorite={item.isFavorite}
                       onEdit={() => handleEdit(item)}

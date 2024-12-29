@@ -12,6 +12,7 @@ const TravelstoryCard = ({
   onFavClick,
   onClick,
 }) => {
+  console.log(visitedLoaction);
   return (
     <div className="border rounded-lg overflow-hidden bg-white hover:shadow-lg hover:shadow-slate-200 transition-all ease-in-out relative cursor-pointer">
       <img
@@ -30,6 +31,14 @@ const TravelstoryCard = ({
             </span>
           </div>
         </div>
+
+        <p className="text-x5 text-slate-600 mt-2">{story?.slice(0, 60)}</p>
+        {/* <div className="">
+          <GrMapLocation className="text-sm" />
+          {visitedLoaction.map((item, index) =>
+            visitedLoaction.length == index + 1 ? `${item}` : `${item}`
+          )}
+        </div> */}
       </div>
     </div>
   );
