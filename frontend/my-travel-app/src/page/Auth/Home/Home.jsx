@@ -45,7 +45,7 @@ const Home = () => {
     getUserInfo();
     return () => {};
   }, []);
-  console.log(allstories);
+  console.log(allstories.visitedLocation);
   return (
     <>
       <Navbar userInfo={userInfo} />
