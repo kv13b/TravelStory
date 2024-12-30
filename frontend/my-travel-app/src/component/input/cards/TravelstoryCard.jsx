@@ -33,12 +33,12 @@ const TravelstoryCard = ({
         </div>
 
         <p className="text-x5 text-slate-600 mt-2">{story?.slice(0, 60)}</p>
-        {/* <div className="">
+        <div className="">
           <GrMapLocation className="text-sm" />
-          {visitedLoaction.map((item, index) =>
+          {/* {visitedLoaction.map((item, index) =>
             visitedLoaction.length == index + 1 ? `${item}` : `${item}`
-          )}
-        </div> */}
+          )} */}
+        </div>
       </div>
     </div>
   );

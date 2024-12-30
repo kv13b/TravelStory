@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const travelStroySchema = new Schema({
   title: { type: String, required: true },
   story: { type: String, required: true },
-  visitedLocation: { type: String }, //{ type: [String], default: [] },
+  visitedLocation: { type: [String], default: [] }, //
   isFavourite: { type: Boolean, default: false },
   userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
   createdOn: { type: Date, default: Date.now },
