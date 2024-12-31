@@ -7,22 +7,29 @@ const TravelstoryCard = ({
   title,
   date,
   story,
-  visitedLoaction,
+  visitedLocation,
   isFav,
-  onFavClick,
+  onFavoriteClick,
   onClick,
 }) => {
-  console.log(visitedLoaction);
   return (
     <div className="border rounded-lg overflow-hidden bg-white hover:shadow-lg hover:shadow-slate-200 transition-all ease-in-out relative cursor-pointer">
       <img
         src={imageUrl}
         alt={title}
-        className="w-full object-cover rounded-lg"
+        className="w-full h-56 object-cover rounded-lg"
         onClick={onclick}
       />
 
-      <div className="p-4" onClick={onclick}>
+      <button
+        className="w-12 h-12 items-center justify-center bg-white/40 rounded-lg border border-white/30 absolute top-4 right-4"
+        onClick={onFavoriteClick}
+      >
+        <FaHeart
+          className={`icon-btn ${isFav ? "text-red-500" : "text-white"}`}
+        />
+      </button>
+      <div className="p-4" onClick={onClick}>
         <div className="flex items-center gap-3">
           <div className="flex-1">
             <h6 className="flex-sm font-medium">{title}</h6>
@@ -33,11 +40,11 @@ const TravelstoryCard = ({
         </div>
 
         <p className="text-x5 text-slate-600 mt-2">{story?.slice(0, 60)}</p>
-        <div className="">
+        <div className="inline-flex items-center gap-2 text-[13px] text-cyan-600 bg-cyan-200/40 rounded-mt-3 px-2 py-1">
           <GrMapLocation className="text-sm" />
-          {/* {visitedLoaction.map((item, index) =>
-            visitedLoaction.length == index + 1 ? `${item}` : `${item}`
-          )} */}
+          {visitedLocation.map((item, index) =>
+            visitedLocation.length == index + 1 ? `${item}` : `${item}`
+          )}
         </div>
       </div>
     </div>

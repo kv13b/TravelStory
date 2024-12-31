@@ -45,7 +45,7 @@ const Home = () => {
     getUserInfo();
     return () => {};
   }, []);
-  console.log(allstories.visitedLocation);
+
   return (
     <>
       <Navbar userInfo={userInfo} />
@@ -67,7 +67,7 @@ const Home = () => {
                       isFavorite={item.isFavorite}
                       onEdit={() => handleEdit(item)}
                       onClick={() => handleViewStory(item)}
-                      onFavorite={() => UpdateIsFav(item)}
+                      onFavoriteClick={() => UpdateIsFav(item)}
                     />
                   );
                 })}
