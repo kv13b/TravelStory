@@ -38,7 +38,20 @@ const Home = () => {
 
   const handleViewStory = (data) => {};
 
-  const UpdateIsFav = async (storyData) => {};
+  const UpdateIsFav = async (storyData) => {
+    const storyId = storyData._id;
+    try {
+      const response = await axiosinstance.put("/edit-isfav/" + storyId, {
+        isFavourite: !storyData.isFavourite,
+      });
+      console.log(response);
+      if (response.data && response.data.story) {
+        getAllTravelStories();
+      }
+    } catch (error) {
+      console.log("an unexpected error occured" + error);
+    }
+  };
 
   useEffect(() => {
     getAllTravelStories();
@@ -64,7 +77,7 @@ const Home = () => {
                       story={item.story}
                       date={item.createdOn}
                       visitedLocation={item.visitedLocation}
-                      isFavorite={item.isFavorite}
+                      isFavorite={item.isFavourite}
                       onEdit={() => handleEdit(item)}
                       onClick={() => handleViewStory(item)}
                       onFavoriteClick={() => UpdateIsFav(item)}
