@@ -3,11 +3,20 @@ import Navbar from "../../../component/input/Navbar";
 import { useEffect, useState } from "react";
 import axiosinstance from "../../../utils/axiosinstance";
 import TravelstoryCard from "../../../component/input/cards/TravelstoryCard";
+import { MdAdd } from "react-icons/md";
+import { ToastContainer, toast } from "react-toastify";
+import Modal from "react-modal";
 
 const Home = () => {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(null);
   const [allstories, setAllStories] = useState([]);
+
+  const [openAddEditModel, setOpenAddEditModel] = useState({
+    isShown: false,
+    type: "add",
+    data: null,
+  });
   //get user info
   const getUserInfo = async () => {
     try {
@@ -46,6 +55,7 @@ const Home = () => {
       });
       console.log(response);
       if (response.data && response.data.story) {
+        toast.success("Story Updated successfully");
         getAllTravelStories();
       }
     } catch (error) {
@@ -92,6 +102,15 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <button
+        className="w-16 h-16 flex items-center justify-center rounded-full bg-primary hover:bg-cyan-400 fixed right-10 bottom-10"
+        onClick={() => {
+          setOpenAddEditModel({ isShown: true, type: "Add", data: null });
+        }}
+      >
+        <MdAdd className="text-[32px] text-white" />
+      </button>
+      <ToastContainer />
     </>
   );
 };
