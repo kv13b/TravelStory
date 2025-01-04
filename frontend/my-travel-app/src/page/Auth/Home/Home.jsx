@@ -6,6 +6,7 @@ import TravelstoryCard from "../../../component/input/cards/TravelstoryCard";
 import { MdAdd } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import Modal from "react-modal";
+import AddEditTravelStories from "./AddEditTravelStories";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -102,6 +103,18 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <Modal
+        isOpen={openAddEditModel.isShown}
+        onRequestClose={() => {}}
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0,0,0,2)",
+            zIndex: 999,
+          },
+        }}
+        appElement={document.getElementById("root")}
+        className="model-box"
+      ></Modal>
       <button
         className="w-16 h-16 flex items-center justify-center rounded-full bg-primary hover:bg-cyan-400 fixed right-10 bottom-10"
         onClick={() => {
