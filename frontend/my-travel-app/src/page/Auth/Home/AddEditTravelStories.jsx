@@ -1,4 +1,9 @@
-function AddEditTravelStories() {
+function AddEditTravelStories({
+  type,
+  storyInfo,
+  setOpenAddEditModel,
+  getAllTravelStories,
+}) {
   return <div>AddEditTravelStories</div>;
 }
 

@@ -108,13 +108,22 @@ const Home = () => {
         onRequestClose={() => {}}
         style={{
           overlay: {
-            backgroundColor: "rgba(0,0,0,2)",
+            backgroundColor: "rgba(0,0,0,0.2)",
             zIndex: 999,
           },
         }}
         appElement={document.getElementById("root")}
         className="model-box"
-      ></Modal>
+      >
+        <AddEditTravelStories
+          type={openAddEditModel.type}
+          storyInfo={openAddEditModel.data}
+          onClose={() => {
+            setOpenAddEditModel({ isShown: false, type: "add", data: null });
+          }}
+          getAllTravelStories={getAllTravelStories}
+        />
+      </Modal>
       <button
         className="w-16 h-16 flex items-center justify-center rounded-full bg-primary hover:bg-cyan-400 fixed right-10 bottom-10"
         onClick={() => {
