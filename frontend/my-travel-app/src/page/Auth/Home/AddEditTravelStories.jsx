@@ -1,4 +1,10 @@
-import { MdAdd, MdClose } from "react-icons/md";
+import {
+  MdAdd,
+  MdClose,
+  MdDeleteOutline,
+  MdDragHandle,
+  MdUpdate,
+} from "react-icons/md";
 
 function AddEditTravelStories({
   type,
@@ -7,6 +13,7 @@ function AddEditTravelStories({
   getAllTravelStories,
 }) {
   console.log(type);
+  const handleAddOrUpdateClick = () => {};
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -16,10 +23,28 @@ function AddEditTravelStories({
 
         <div>
           <div className="flex items-center gap-3 bg-cyan-50/50 p-2 rounded-l-lg">
-            <button className="btn-small" onClick={() => {}}>
-              <MdAdd className="text-lg" />
-              ADD STORY
-            </button>
+            {type === "Add" ? (
+              <button
+                className="btn-small"
+                onClick={() => {
+                  handleAddOrUpdateClick;
+                }}
+              >
+                <MdAdd className="text-lg" />
+                ADD STORY
+              </button>
+            ) : (
+              <>
+                <button className="btn-small" onClick={handleAddOrUpdateClick}>
+                  <MdUpdate className="text-lg" />
+                  UPDATE STORY
+                </button>
+                <button className="btn-small btn-delete" onClick={onClose}>
+                  <MdDeleteOutline className="text-lg" />
+                  DELETE
+                </button>
+              </>
+            )}
 
             <button className="" onClick={onClose}>
               <MdClose className="text-xl text-slate-400" />
