@@ -5,6 +5,7 @@ import {
   MdDragHandle,
   MdUpdate,
 } from "react-icons/md";
+import DataSelector from "../../../component/input/DataSelector";
 
 function AddEditTravelStories({
   type,
@@ -51,6 +52,17 @@ function AddEditTravelStories({
             </button>
           </div>
         </div>
+      </div>
+      <div className="flex-1 flex flex-col gap-2 pt-4">
+        <label className="input-label">TITLE</label>
+        <input
+          type="text"
+          className="text-2xl text-slate-950 outline-none"
+          placeholder="A day in a wonderful Place"
+        />
+      </div>
+      <div className="my-3">
+        <DataSelector />
       </div>
     </div>
   );
