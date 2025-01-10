@@ -6,6 +6,8 @@ import {
   MdUpdate,
 } from "react-icons/md";
 import DataSelector from "../../../component/input/DataSelector";
+import { useState } from "react";
+import ImageSelector from "../../../component/input/ImageSelector";
 
 function AddEditTravelStories({
   type,
@@ -13,6 +15,11 @@ function AddEditTravelStories({
   onClose,
   getAllTravelStories,
 }) {
+  const [title, setTitle] = useState("");
+  const [storyImg, setStoryImg] = useState(null);
+  const [story, setStory] = useState("");
+  const [visitedLocation, setVisitedLocation] = useState([]);
+  const [visitedDate, setVisitedDate] = useState(null);
   console.log(type);
   const handleAddOrUpdateClick = () => {};
   return (
@@ -59,10 +66,25 @@ function AddEditTravelStories({
           type="text"
           className="text-2xl text-slate-950 outline-none"
           placeholder="A day in a wonderful Place"
+          value={title}
+          onChange={(target) => setTitle(target.value)}
         />
       </div>
       <div className="my-3">
-        <DataSelector />
+        <DataSelector date={visitedDate} setdate={setVisitedDate} />
+      </div>
+
+      <ImageSelector image={storyImg} setimage={setStoryImg} />
+      <div className="flex flex-col  gap-2 mt-4">
+        <label className="input-label">STORY</label>
+        <textarea
+          type="text"
+          className="text-sm text-slate-950 outline-none bg-slate-50 p-2 rounded"
+          placeholder="Your Story"
+          rows={10}
+          value={story}
+          onChange={({ target }) => setStory(target.value)}
+        />
       </div>
     </div>
   );
