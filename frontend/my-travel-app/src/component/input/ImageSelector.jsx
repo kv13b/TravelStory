@@ -5,7 +5,12 @@ const ImageSelector = ({ image, setimage }) => {
   const InputRef = useRef(null);
   const [previewUrl, setPreviewUrl] = useState(null);
 
-  const handleImageChange = () => {};
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setimage(file);
+    }
+  };
   const onchooseFile = () => {
     InputRef.current.click();
   };
