@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { FaRegFileImage } from "react-icons/fa6";
+import { MdDeleteOutline } from "react-icons/md";
 
-const ImageSelector = ({ image, setimage }) => {
+const ImageSelector = ({ image, setimage, handleDeleteImage }) => {
   const InputRef = useRef(null);
   const [previewUrl, setPreviewUrl] = useState(null);
 
@@ -21,6 +22,10 @@ const ImageSelector = ({ image, setimage }) => {
     };
   }, [image]);
 
+  const handleRemoveImage = () => {
+    setimage(null);
+    handleDeleteImage();
+  };
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -56,6 +61,12 @@ const ImageSelector = ({ image, setimage }) => {
             alt="selected"
             className="w-full h-[300px] object-cover rounded-lg"
           />
+          <button
+            className="btn-small btn-delete absolute top-2 right-2"
+            onClick={handleRemoveImage}
+          >
+            <MdDeleteOutline className="text-lg" />
+          </button>
         </div>
       )}
     </div>

@@ -8,6 +8,7 @@ import {
 import DataSelector from "../../../component/input/DataSelector";
 import { useState } from "react";
 import ImageSelector from "../../../component/input/ImageSelector";
+import TagInput from "../../../component/input/TagInput";
 
 function AddEditTravelStories({
   type,
@@ -22,6 +23,8 @@ function AddEditTravelStories({
   const [visitedDate, setVisitedDate] = useState(null);
   console.log(type);
   const handleAddOrUpdateClick = () => {};
+
+  const handleDeleteImage = () => {};
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -74,7 +77,11 @@ function AddEditTravelStories({
         <DataSelector date={visitedDate} setdate={setVisitedDate} />
       </div>
 
-      <ImageSelector image={storyImg} setimage={setStoryImg} />
+      <ImageSelector
+        image={storyImg}
+        setimage={setStoryImg}
+        handleDeleteImage={handleDeleteImage}
+      />
       <div className="flex flex-col  gap-2 mt-4">
         <label className="input-label">STORY</label>
         <textarea
@@ -85,6 +92,10 @@ function AddEditTravelStories({
           value={story}
           onChange={({ target }) => setStory(target.value)}
         />
+      </div>
+      <div className="pt-3">
+        <label className="input-label">VISITED LOCATION</label>
+        <TagInput tags={visitedLocation} setTags={setVisitedLocation} />
       </div>
     </div>
   );
