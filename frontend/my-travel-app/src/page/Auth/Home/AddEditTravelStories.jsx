@@ -21,8 +21,29 @@ function AddEditTravelStories({
   const [story, setStory] = useState("");
   const [visitedLocation, setVisitedLocation] = useState([]);
   const [visitedDate, setVisitedDate] = useState(null);
+  const [error, setError] = useState("");
   console.log(type);
-  const handleAddOrUpdateClick = () => {};
+
+  const UpdateTravelStory = () => {};
+
+  const AddNewTravelStory = () => {};
+  const handleAddOrUpdateClick = () => {
+    console.log("data", { title, story });
+    if (!title) {
+      setError("Please enter the titile");
+      return;
+    }
+    if (!story) {
+      setError("Please enter the story");
+      return;
+    }
+    setError("");
+    if (type === "Edit") {
+      UpdateTravelStory();
+    } else {
+      AddNewTravelStory();
+    }
+  };
 
   const handleDeleteImage = () => {};
   return (
@@ -61,6 +82,9 @@ function AddEditTravelStories({
               <MdClose className="text-xl text-slate-400" />
             </button>
           </div>
+          {error && (
+            <p className="text-red-500 text-xs pt-2 text-right">{error}</p>
+          )}
         </div>
       </div>
       <div className="flex-1 flex flex-col gap-2 pt-4">
