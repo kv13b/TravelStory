@@ -9,6 +9,10 @@ import DataSelector from "../../../component/input/DataSelector";
 import { useState } from "react";
 import ImageSelector from "../../../component/input/ImageSelector";
 import TagInput from "../../../component/input/TagInput";
+import axiosinstance from "../../../utils/axiosinstance";
+import moment from "moment";
+import { toast } from "react-toastify";
+import UploadImage from "../../../utils/UploadImage";
 
 function AddEditTravelStories({
   type,
@@ -24,13 +28,40 @@ function AddEditTravelStories({
   const [error, setError] = useState("");
   console.log(type);
 
-  const UpdateTravelStory = () => {};
+  const UpdateTravelStory = async () => {};
 
-  const AddNewTravelStory = () => {};
+  const AddNewTravelStory = async () => {
+    try {
+      let imageurl = "";
+      if (storyImg) {
+        const imgupload = await UploadImage(storyImg);
+        imageurl = imgupload.imageurl || "";
+      }
+
+      const response = await axiosinstance.post("/add-travel-story", {
+        title,
+        story,
+        imageurl: imageurl || "",
+        visitedLocation,
+        visitedDate: visitedDate
+          ? moment(visitedDate).valueOf()
+          : moment().valueOf(),
+      });
+      if (response.data && response.data.story) {
+        toast.success("Story added successfully");
+        getAllTravelStories();
+        onClose();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleAddOrUpdateClick = () => {
+    console.log(title);
+    console.log(story);
     console.log("data", { title, story });
     if (!title) {
-      setError("Please enter the titile");
+      setError("Please enter the title");
       return;
     }
     if (!story) {
@@ -38,10 +69,10 @@ function AddEditTravelStories({
       return;
     }
     setError("");
-    if (type === "Edit") {
-      UpdateTravelStory();
-    } else {
+    if (type === "add") {
       AddNewTravelStory();
+    } else {
+      UpdateTravelStory();
     }
   };
 
@@ -56,12 +87,7 @@ function AddEditTravelStories({
         <div>
           <div className="flex items-center gap-3 bg-cyan-50/50 p-2 rounded-l-lg">
             {type === "Add" ? (
-              <button
-                className="btn-small"
-                onClick={() => {
-                  handleAddOrUpdateClick;
-                }}
-              >
+              <button className="btn-small" onClick={handleAddOrUpdateClick}>
                 <MdAdd className="text-lg" />
                 ADD STORY
               </button>
@@ -94,7 +120,7 @@ function AddEditTravelStories({
           className="text-2xl text-slate-950 outline-none"
           placeholder="A day in a wonderful Place"
           value={title}
-          onChange={(target) => setTitle(target.value)}
+          onChange={({ target }) => setTitle(target.value)}
         />
       </div>
       <div className="my-3">
