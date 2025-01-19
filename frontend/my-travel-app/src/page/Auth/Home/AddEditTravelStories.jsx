@@ -69,7 +69,7 @@ function AddEditTravelStories({
       return;
     }
     setError("");
-    if (type === "add") {
+    if (type === "Add") {
       AddNewTravelStory();
     } else {
       UpdateTravelStory();
