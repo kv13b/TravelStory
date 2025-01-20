@@ -41,7 +41,7 @@ function AddEditTravelStories({
       const response = await axiosinstance.post("/add-travel-story", {
         title,
         story,
-        imageurl: imageurl || "",
+        imageUrl: imageurl || "",
         visitedLocation,
         visitedDate: visitedDate
           ? moment(visitedDate).valueOf()

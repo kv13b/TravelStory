@@ -7,6 +7,7 @@ import { MdAdd } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import Modal from "react-modal";
 import AddEditTravelStories from "./AddEditTravelStories";
+import ViewTravelStory from "./ViewTravelStory";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -16,6 +17,11 @@ const Home = () => {
   const [openAddEditModel, setOpenAddEditModel] = useState({
     isShown: false,
     type: "add",
+    data: null,
+  });
+
+  const [openViewModal, setOpenViewModal] = useState({
+    isShown: false,
     data: null,
   });
   //get user info
@@ -43,10 +49,10 @@ const Home = () => {
       console.log("an unexpected error occured" + error);
     }
   };
-  //handle edit
-  const handleEdit = (data) => {};
 
-  const handleViewStory = (data) => {};
+  const handleViewStory = (data) => {
+    setOpenViewModal({ isShown: true, data });
+  };
 
   const UpdateIsFav = async (storyData) => {
     const storyId = storyData._id;
@@ -89,7 +95,7 @@ const Home = () => {
                       date={item.createdOn}
                       visitedLocation={item.visitedLocation}
                       isFavorite={item.isFavourite}
-                      onEdit={() => handleEdit(item)}
+                      // onEdit={() => handleEdit(item)}
                       onClick={() => handleViewStory(item)}
                       onFavoriteClick={() => UpdateIsFav(item)}
                     />
@@ -122,6 +128,24 @@ const Home = () => {
             setOpenAddEditModel({ isShown: false, type: "add", data: null });
           }}
           getAllTravelStories={getAllTravelStories}
+        />
+      </Modal>
+      {/* view travel story */}
+      <Modal
+        isOpen={openViewModal.isShown}
+        onRequestClose={() => {}}
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0,0,0,0.2)",
+            zIndex: 999,
+          },
+        }}
+        appElement={document.getElementById("root")}
+        className="model-box"
+      >
+        <ViewTravelStory
+          type={openViewModal.type}
+          storyInfo={openViewModal.data || null}
         />
       </Modal>
       <button

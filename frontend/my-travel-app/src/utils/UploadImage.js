@@ -6,7 +6,7 @@ const UploadImage = async (imageFile) => {
   formdata.append("image", imageFile);
   try {
     const response = await axiosinstance.post("/image-upload", formdata, {
-      Headers: {
+      headers: {
         "Content-Type": "multipart/form-data",
       },
     });
@@ -14,6 +14,9 @@ const UploadImage = async (imageFile) => {
     return response.data;
   } catch (error) {
     console.log("error Uploading the file", error);
+    if (error.response) {
+      console.log("Server responded with:", error.response.data);
+    }
     throw error;
   }
 };
