@@ -145,9 +145,16 @@ const Home = () => {
       >
         <ViewTravelStory
           storyInfo={openViewModal.data || null}
-          OnEditClick={() => {}}
+          OnEditClick={() => {
+            setOpenViewModal((prevstate) => ({
+              ...prevstate,
+              isShown: false,
+            }));
+          }}
           OnDeleteClick={() => {}}
-          onClose={() => {}}
+          onClose={() => {
+            setOpenViewModal((prevstate) => ({ ...prevstate, isShown: false }));
+          }}
         />
       </Modal>
       <button

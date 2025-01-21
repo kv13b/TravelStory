@@ -51,6 +51,17 @@ const ViewTravelStory = ({
             </div>
           </div>
         </div>
+        <img
+          src={storyInfo && storyInfo.imageUrl}
+          alt="selected"
+          className="w-full h-[300px] object-cover rounded-lg"
+        />
+
+        <div>
+          <p className="text-sm text-slate-950 leading-6 text-justify whitlespace-pre-line">
+            {storyInfo.story}
+          </p>
+        </div>
       </div>
     </div>
   );
