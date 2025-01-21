@@ -78,7 +78,7 @@ function AddEditTravelStories({
 
   const handleDeleteImage = () => {};
   return (
-    <div>
+    <div className="relative">
       <div className="flex items-center justify-between">
         <h5 className="text-xl font-medium text-slate-700">
           {type === "Add" ? "Add Story" : "Update Story"}
