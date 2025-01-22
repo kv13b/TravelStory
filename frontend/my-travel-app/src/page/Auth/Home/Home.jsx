@@ -69,6 +69,9 @@ const Home = () => {
       console.log("an unexpected error occured" + error);
     }
   };
+  const handleEdit = (data) => {
+    setOpenAddEditModel({ isShown: true, type: "edit", data: data });
+  };
 
   useEffect(() => {
     getAllTravelStories();
@@ -150,6 +153,7 @@ const Home = () => {
               ...prevstate,
               isShown: false,
             }));
+            handleEdit(openViewModal.data || null);
           }}
           OnDeleteClick={() => {}}
           onClose={() => {

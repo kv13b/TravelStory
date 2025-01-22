@@ -9,7 +9,7 @@ const DataSelector = ({ date, setdate }) => {
     <div>
       <button
         className="inline-flex  items-center gap-2 text-[13px] font-medium text-sky-600 bg-sky-200/40 hover:bg-sky-200/70 rounded-px-2 py-2 cursor-pointer w-50"
-        style={{ width: "100px" }}
+        style={{ width: "110px" }}
         onClick={() => {
           setOpenDatePicker(true);
         }}
