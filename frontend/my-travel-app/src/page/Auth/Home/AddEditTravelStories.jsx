@@ -30,7 +30,47 @@ function AddEditTravelStories({
   const [error, setError] = useState("");
   console.log(type);
 
-  const UpdateTravelStory = async () => {};
+  const UpdateTravelStory = async () => {
+    const storyId = storyInfo._id;
+    try {
+      let imageurl = "";
+      let postdata = {
+        title,
+        story,
+        imageUrl: storyInfo.imageurl || "",
+        visitedLocation,
+        visitedDate: visitedDate
+          ? moment(visitedDate).valueOf()
+          : moment().valueOf(),
+      };
+
+      if (typeof storyImg === "object") {
+        const imageUploadRes = await UploadImage(storyImg);
+        imageurl = imageUploadRes.imageurl || "";
+
+        postdata = {
+          ...postdata,
+          imageUrl: imageurl,
+        };
+      }
+
+      const response = await axiosinstance.put(
+        "/edit-story/" + storyId,
+        postdata
+      );
+      if (response.data && response.data.story) {
+        toast.success("Story Updated successfully");
+        getAllTravelStories();
+        onClose();
+      }
+    } catch (error) {
+      if (error && error.data && error.data.message) {
+        setError(error.data.message);
+      } else {
+        setError("An unexpected error occured .try again!");
+      }
+    }
+  };
 
   const AddNewTravelStory = async () => {
     try {
