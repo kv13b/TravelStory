@@ -43,7 +43,7 @@ const TravelstoryCard = ({
         <div className="inline-flex items-center gap-2 text-[13px] text-cyan-600 bg-cyan-200/40 rounded-mt-3 px-2 py-1">
           <GrMapLocation className="text-sm" />
           {visitedLocation.map((item, index) =>
-            visitedLocation.length == index + 1 ? `${item}` : `${item}`
+            visitedLocation.length == index + 1 ? `${item}` : `${item},`
           )}
         </div>
       </div>

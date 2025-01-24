@@ -37,7 +37,7 @@ function AddEditTravelStories({
       let postdata = {
         title,
         story,
-        imageUrl: storyInfo.imageurl || "",
+        imageUrl: storyInfo.imageUrl || "",
         visitedLocation,
         visitedDate: visitedDate
           ? moment(visitedDate).valueOf()
@@ -122,7 +122,38 @@ function AddEditTravelStories({
     }
   };
 
-  const handleDeleteImage = () => {};
+  const handleDeleteImage = async () => {
+    try {
+      const response = await axiosinstance.delete("/delete-image", {
+        params: {
+          imageUrl: storyInfo.imageUrl,
+        },
+      });
+      if (response.data) {
+        const storyid = storyInfo._id;
+
+        let postdata = {
+          title,
+          story,
+          visitedLocation,
+          visitedDate: moment().valueOf(),
+          imageUrl: "",
+        };
+        const updt = await axiosinstance.put(
+          "/edit-story/" + storyid,
+          postdata
+        );
+        setStoryImg(null);
+        console.log(postdata);
+      }
+    } catch (error) {
+      if (error && error.data && error.data.message) {
+        setError(error.data.message);
+      } else {
+        setError("An unexpected error occured .try again!");
+      }
+    }
+  };
   return (
     <div className="relative">
       <div className="flex items-center justify-between">
