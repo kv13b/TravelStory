@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Modal from "react-modal";
 import AddEditTravelStories from "./AddEditTravelStories";
 import ViewTravelStory from "./ViewTravelStory";
+import EmptyCard from "../../../component/input/cards/EmptyCard";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ const Home = () => {
       const response = await axiosinstance.get("/get-travel-story");
       if (response.data && response.data.stories) {
         setAllStories(response.data.stories);
+        getAllTravelStories();
       }
     } catch (error) {
       console.log("an unexpected error occured" + error);
@@ -71,6 +73,21 @@ const Home = () => {
   };
   const handleEdit = (data) => {
     setOpenAddEditModel({ isShown: true, type: "edit", data: data });
+  };
+
+  const HandleDeleteClick = async (data) => {
+    const storyid = data._id;
+
+    try {
+      const response = await axiosinstance.delete("/delete-story/" + storyid);
+
+      if (response.data && response.data.message) {
+        setOpenViewModal((prevstate) => ({ ...prevstate, isShown: false }));
+        toast.error("Story deleted successfully");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -106,7 +123,9 @@ const Home = () => {
                 })}
               </div>
             ) : (
-              <>Empty card here</>
+              <>
+                <EmptyCard />
+              </>
             )}
             <div className="w-[320px]"></div>
           </div>
@@ -155,7 +174,9 @@ const Home = () => {
             }));
             handleEdit(openViewModal.data || null);
           }}
-          OnDeleteClick={() => {}}
+          OnDeleteClick={() => {
+            HandleDeleteClick(openViewModal.data || "");
+          }}
           onClose={() => {
             setOpenViewModal((prevstate) => ({ ...prevstate, isShown: false }));
           }}
