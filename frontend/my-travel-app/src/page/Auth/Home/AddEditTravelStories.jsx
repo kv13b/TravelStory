@@ -132,12 +132,12 @@ function AddEditTravelStories({
       if (response.data) {
         const storyid = storyInfo._id;
 
-        let postdata = {
+        const postdata = {
           title,
           story,
+          imageUrl: "",
           visitedLocation,
           visitedDate: moment().valueOf(),
-          imageUrl: "",
         };
         const updt = await axiosinstance.put(
           "/edit-story/" + storyid,
@@ -147,6 +147,7 @@ function AddEditTravelStories({
         console.log(postdata);
       }
     } catch (error) {
+      console.log(error);
       if (error && error.data && error.data.message) {
         setError(error.data.message);
       } else {
