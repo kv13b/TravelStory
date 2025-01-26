@@ -46,7 +46,6 @@ const Home = () => {
       const response = await axiosinstance.get("/get-travel-story");
       if (response.data && response.data.stories) {
         setAllStories(response.data.stories);
-        getAllTravelStories();
       }
     } catch (error) {
       console.log("an unexpected error occured" + error);
@@ -127,12 +126,12 @@ const Home = () => {
               <>
                 <EmptyCard
                   imgSrc={CreateImg}
-                  message={`Start creating your first travel story!Click the 'Add' button
-                  to get started`}
+                  message="Start creating your first travel story!Click the Add button
+                  to get started"
                 />
               </>
             )}
-            <div className="w-[320px]"></div>
+            {/* <div className="w-[320px]"></div> */}
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-const EmptyCard = (imgSrc, message) => {
+const EmptyCard = ({ imgSrc, message }) => {
   return (
     <div className="flex flex-col items-center justify-center mt-20">
       <img src={imgSrc} alt="no notes" className="w-24" />
