@@ -9,6 +9,7 @@ import Modal from "react-modal";
 import AddEditTravelStories from "./AddEditTravelStories";
 import ViewTravelStory from "./ViewTravelStory";
 import EmptyCard from "../../../component/input/cards/EmptyCard";
+import CreateImg from "../../../assets/create.png";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -124,7 +125,11 @@ const Home = () => {
               </div>
             ) : (
               <>
-                <EmptyCard />
+                <EmptyCard
+                  imgSrc={CreateImg}
+                  message={`Start creating your first travel story!Click the 'Add' button
+                  to get started`}
+                />
               </>
             )}
             <div className="w-[320px]"></div>
