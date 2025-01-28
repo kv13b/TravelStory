@@ -15,6 +15,7 @@ const Home = () => {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(null);
   const [allstories, setAllStories] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [openAddEditModel, setOpenAddEditModel] = useState({
     isShown: false,
@@ -98,7 +99,11 @@ const Home = () => {
 
   return (
     <>
-      <Navbar userInfo={userInfo} />
+      <Navbar
+        userInfo={userInfo}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
 
       <div className="cotainer mx-auto py-10">
         <div className="flex gap-7">
