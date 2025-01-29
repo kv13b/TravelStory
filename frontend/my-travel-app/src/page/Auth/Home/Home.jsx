@@ -91,6 +91,19 @@ const Home = () => {
     }
   };
 
+  const onSearchStory = async (query) => {
+    try {
+      const response = await axiosinstance.get("/search", {
+        params: {
+          query,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleClearSearch = () => {};
+
   useEffect(() => {
     getAllTravelStories();
     getUserInfo();
@@ -103,6 +116,8 @@ const Home = () => {
         userInfo={userInfo}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
+        handleSearch={onSearchStory}
+        handleClearSearch={handleClearSearch}
       />
 
       <div className="cotainer mx-auto py-10">
