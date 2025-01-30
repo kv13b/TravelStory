@@ -10,13 +10,14 @@ import AddEditTravelStories from "./AddEditTravelStories";
 import ViewTravelStory from "./ViewTravelStory";
 import EmptyCard from "../../../component/input/cards/EmptyCard";
 import CreateImg from "../../../assets/create.png";
+import { DayPicker } from "react-day-picker";
 
 const Home = () => {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(null);
   const [allstories, setAllStories] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-
+  const [FilterType, setFilterType] = useState("");
   const [openAddEditModel, setOpenAddEditModel] = useState({
     isShown: false,
     type: "add",
@@ -98,11 +99,18 @@ const Home = () => {
           query,
         },
       });
+      if (response.data && response.data.stories) {
+        setFilterType("search");
+        setAllStories(response.data.stories);
+      }
     } catch (error) {
       console.log(error);
     }
   };
-  const handleClearSearch = () => {};
+  const handleClearSearch = () => {
+    setFilterType("");
+    getAllTravelStories();
+  };
 
   useEffect(() => {
     getAllTravelStories();
@@ -116,7 +124,7 @@ const Home = () => {
         userInfo={userInfo}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        handleSearch={onSearchStory}
+        onSearchNote={onSearchStory}
         handleClearSearch={handleClearSearch}
       />
 
@@ -151,7 +159,7 @@ const Home = () => {
                 />
               </>
             )}
-            {/* <div className="w-[320px]"></div> */}
+            <div className="w-[320px]"></div>
           </div>
         </div>
       </div>
